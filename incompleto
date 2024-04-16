@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,7 +11,6 @@ int main()
 	int grau, pontos, i, j;
 	float *valorX = NULL;
 	float *valorFX = NULL;
-	float valorCalcular;
 	char op;
 	
 	printf("\nDigite o grau da funcao que deseja obter: ");
@@ -23,7 +23,7 @@ int main()
 	
 	recebe(valorX, valorFX, pontos);
 	
-	lagrange(valorX, valorFX, grau);
+	lagrange(valorX, valorFX, pontos);
 	
 	system("pause");
 	return 0;
@@ -33,7 +33,7 @@ void aloca(float **ptr, int tam)
 {
 	if((*ptr = (float*) malloc(tam * sizeof(float))) == NULL)
 	{
-		exit; 1;
+		exit(1);
 	}
 }
 
@@ -72,15 +72,15 @@ void lagrange(float *x, float *fx, int tam)
 			{
 				if(i != j)
 				{
-					Li = Li * ((calcularX - *(x + j)) / *(x + i) - *(x + j));
-				}
-				printf("\nO valor de Li(x) eh %.2f", Li);
+					Li = Li * ((calcularX - *(x + j)) / (*(x + i) - *(x + j)));
+				}	
 			}
+			printf("\nO valor de Li(x%d) eh %.2f",i, Li);
 			Px = Px + (Li * *(fx + i));
 		}
-		printf("O valor de F(x) eh: %.2f", Px);
+		printf("\nO valor de F(x) eh: %.2f", Px);
 		
-		printf("\nDeseja calcular outro valor? (S/N): ");
+		printf("\n\nDeseja calcular outro valor? (S/N): ");
 		scanf(" %c", &op);
 		fflush(stdin);
 	}while(op != 'n' && op != 'N');
